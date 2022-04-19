@@ -1,33 +1,35 @@
 #include "main.h"
-
 /**
- * _printf-produces output according to a format.
- * @format:a character string.
- *
- * Return:the number of characters printed.
+ * _printf - produces output according to format
+ * @format: character string
+ * Return: nmber of characters printed
  */
 int _printf(const char *format, ...)
 {
-	va_list fomatp;
-	int i = 0;
-	int chnum = 0;
 
-	va_start(fomatp, format);
+	int i;
+	int len = 0;
+	char *newstr = NULL;
+
+	while (format[len] != '\0')
+	{
+		len++;
+	}
+
+	newstr = malloc(sizeof(char) * (len + 1));
+
+	if (newstr == NULL)
+	{
+		return (1);
+	}
+
 	for (i = 0; format[i] != '\0'; i++)
 	{
-	if (format[i] == '\0')
-	{
-	break;
+		newstr[i] = format[i];
 	}
-	else if (format[i] == '%' && format[i + 1])
-	{
-	chnum += (*format_conversion(format[i + 1]))(valist);
-	}
-	else
-	{
-	chnum += _putchar(format[i]);
-	}
-	}
-	va_end(fomatp);
-	return (chnum);
+	newstr[i] = '\0';
+
+	write(1, format, len);
+	free(newstr);
+	return (0);
 }
