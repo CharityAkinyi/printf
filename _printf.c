@@ -1,67 +1,33 @@
 #include "main.h"
 
 /**
- * printfom-establish format specifiers
- * @format:string input length
- * @va_list args:string arguments
+ * _printf-produces output according to a format.
+ * @format:a character string.
  *
- * Return:no return
+ * Return:the number of characters printed.
  */
-void printfom(const char *formt, va_list args)
+int _printf(const char *format, ...)
 {
-	int formlen = 0;
+	va_list fomatp;
+	int i = 0;
+	int chnum = 0;
 
-	while (*formt)
+	va_start(fomatp, format);
+	for (i = 0; format[i] != '\0'; i++)
 	{
-	if (*formlen == 0)
+	if (format[i] == '\0')
 	{
-	if (*formt == '%')
-	formlen = 1;
+	break;
+	}
+	else if (format[i] == '%' && format[i + 1])
+	{
+	chnum += (*format_conversion(format[i + 1]))(valist);
+	}
 	else
 	{
-	putchar(*formt);
-	}
-	else if (formlen == 1)
-	{
-	switch (*formt)
-	{
-	case 'c':
-	{
-	putchar(va_arg(args, int));
-	break;
-	}
-	case 's':
-	{
-	const char *s = va_arg(args, const char *);
-	while (*s)
-	{
-	putchar(*s++);
-	}
-	break;
-	}
-	case '%':
-	{
-	putchar('%');
-	break;
-	}
-	formlen = 0;
+	chnum += _putchar(format[i]);
 	}
 	}
-	formt++;
-	}
-	}
+	va_end(fomatp);
+	return (chnum);
 }
-
-	/**
-	 * _printf-produces output according to a format
-	 * @format:a character string
-	 *
-	 * Return:number of characters printed.
-	 */
-	int _printf(const char *format, ...)
-	{
-		va_list args;
-		va_start(args, format);
-		_printf(format, args);
-		va_ends(args);
-	}
